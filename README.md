@@ -1,4 +1,4 @@
-# Just a forum - Fullstack Reddit Clone
+# Just a forum(JAF) - Fullstack Reddit Clone
 
 Built with the Next.js App Router, TypeScript & Tailwind
 
