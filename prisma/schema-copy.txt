@@ -6,9 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
+  provider     = "mysql"
   url          = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_NON_POOLING")
   relationMode = "prisma"
 }
 
@@ -99,17 +98,18 @@ model Post {
   comments    Comment[] 
   votes       Vote[]
 }
+
 model Comment {
-  id        String    @id @default(cuid()) @db.Uuid
+  id        String   @id @default(cuid())
   text      String
-  createdAt DateTime  @default(now())
-  author    User      @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
-  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
 
   replyToId String?
-  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   replies   Comment[] @relation("ReplyTo")
 
   votes     CommentVote[]
