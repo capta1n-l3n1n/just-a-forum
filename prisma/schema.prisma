@@ -8,7 +8,7 @@ generator client {
 datasource db {
   provider     = "postgresql"
   url          = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_NON_POOLING")
+  directUrl    = env("DATABASE_URL_NON_POOLING")
   relationMode = "prisma"
 }
 
@@ -18,7 +18,7 @@ enum VoteType {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(cuid()) @db.VarChar()
   userId            String
   type              String
   provider          String
@@ -37,7 +37,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(cuid()) @db.VarChar()
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -45,7 +45,7 @@ model Session {
 }
 
 model User {
-  id                String         @id @default(cuid())
+  id                String         @id @default(cuid()) @db.VarChar()
   name              String?
   email             String?        @unique
   emailVerified     DateTime?
@@ -64,7 +64,7 @@ model User {
 }
 
 model Subreddit {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) @db.VarChar()
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -87,7 +87,7 @@ model Subscription {
 }
 
 model Post {
-  id          String    @id @default(cuid())
+  id          String    @id @default(cuid()) @db.VarChar()
   title       String
   content     Json?
   createdAt   DateTime  @default(now())
@@ -96,16 +96,17 @@ model Post {
   authorId    String
   subreddit   Subreddit @relation(fields: [subredditId], references: [id])
   subredditId String
-  comments    Comment[] 
+  comments    Comment[]
   votes       Vote[]
 }
+
 model Comment {
-  id        String    @id @default(cuid()) @db.Uuid
+  id        String   @id @default(cuid()) @db.VarChar()
   text      String
-  createdAt DateTime  @default(now())
-  author    User      @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
-  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
 
   replyToId String?
@@ -115,7 +116,6 @@ model Comment {
   votes     CommentVote[]
   commentId String?
 }
-
 
 model Vote {
   user   User     @relation(fields: [userId], references: [id])
