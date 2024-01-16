@@ -1,3 +1,4 @@
+//use client
 import CustomFeed from "@/components/homepage/CustomFeed";
 import GeneralFeed from "@/components/homepage/GeneralFeed";
 import { buttonVariants } from "@/components/ui/Button";
@@ -13,11 +14,12 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="font-bold text-3xl md:text-4xl">Your feed</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
         {/* @ts-expect-error server component */}
-        {session ? <CustomFeed /> : <GeneralFeed />}
-        {/* <GeneralFeed /> */}
+        {<GeneralFeed />}
+        {/* temp comment to use community like post (update post in the future) change GeneralFeed to post and CustomFeed to community post*/}
+
+        {/* {session ? <CustomFeed /> : <GeneralFeed />} */}
 
         {/* subreddit info */}
         <div className="overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last">
@@ -43,6 +45,14 @@ export default async function Home() {
             >
               Create Community
             </Link>
+            {/* <Link
+              className={buttonVariants({
+                className: "w-full mt-4 mb-6 bg-violet-950 hover:bg-violet-900",
+              })}
+              href={`/`}
+            >
+              Create Post
+            </Link> */}
           </dl>
         </div>
       </div>
